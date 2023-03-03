@@ -64,6 +64,14 @@ class Player(pygame.sprite.Sprite):
         self.direction = "left"
         self.animation_count = 0
         self.fall_count = 0
+        self.jump_count = 0
+
+    def jump(self):
+        self.y_vel = -self.GRAVITY * 8
+        self.animation_count = 0
+        self.jump_count += 1
+        if self.jump_count == 1:
+            self.count = 0
 
     def move(self,dx, dy):
         self.rect.x += dx
@@ -87,6 +95,16 @@ class Player(pygame.sprite.Sprite):
 
         self.fall_count += 1
         self.update_sprite()
+
+    def landed(self):
+        self.fall_count = 0
+        self.y_vel = 0
+        self.jump_count = 0
+
+    def hit_head(self):
+        self.count = 0
+        self.y_vel *= -1
+
 
     def update_sprite(self):
         sprite_sheet = "idle"
@@ -151,7 +169,22 @@ def draw(window, background, bg_image, player, objects):
     pygame.display.update()
 
 
-def handle_move(player):
+def handle_vertical_collision(player, objects, dy):
+    collided_objects = []
+    for object in objects:
+        if pygame.sprite.collide_mask(player, object):
+            if dy > 0:
+                player.rect.bottom = object.rect.top
+                player.landed()
+            elif dy < 0:
+                player.rect.top = object.rect.bottom
+                player.hit_head()
+
+        collided_objects.append(object)
+
+    return collided_objects
+
+def handle_move(player, objects):
     keys = pygame.key.get_pressed()
 
     player.x_vel = 0
@@ -159,6 +192,8 @@ def handle_move(player):
         player.move_left(PLAYER_VEL)
     if keys[pygame.K_d]:
         player.move_right(PLAYER_VEL)
+
+    handle_vertical_collision(player, objects, player.y_vel)
 
 def main(windows):
     clock = pygame.time.Clock()
@@ -179,7 +214,7 @@ def main(windows):
                 break
 
         player.loop(FPS)
-        handle_move(player)
+        handle_move(player, floor)
         draw(window, background, bg_image, player, floor)
 
     pygame.quit()
