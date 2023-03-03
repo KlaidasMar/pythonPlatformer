@@ -15,6 +15,9 @@ PLAYER_VEL = 7
 
 window = pygame.display.set_mode((WIDTH, HEIGHT))
 
+pygame.mixer.music.load("assets/Audio/Peaceful Town Theme.wav")
+pygame.mixer.music.set_volume(0.20)
+pygame.mixer.music.play(-1, 0.0, 5000)
 
 def flip(sprites):
     return [pygame.transform.flip(sprite, True, False) for sprite in sprites]
@@ -169,7 +172,7 @@ class Fire(Object):
 
     def __init__(self, x, y, width, height):
         super().__init__(x, y, width, height, "fire")
-        self.fire = load_sprite_sheets("Traps","Fire", width, height)
+        self.fire = load_sprite_sheets("Traps", "Fire", width, height)
         self.image = self.fire["off"][0]
         self.mask = pygame.mask.from_surface(self.image)
         self.animation_count = 0
@@ -192,6 +195,7 @@ class Fire(Object):
 
         if self.animation_count // self.ANIMATION_DELAY > len(sprites):
             self.animation_count = 0
+
 
 class Block(Object):
     def __init__(self, x, y, size):
@@ -241,6 +245,7 @@ def handle_vertical_collision(player, objects, dy):
 
     return collided_objects
 
+
 def collide(player, objects, dx):
     player.move(dx, 0)
     player.update()
@@ -252,7 +257,7 @@ def collide(player, objects, dx):
 
     player.move(-dx, 0)
     player.update()
-    return  collided_object
+    return collided_object
 
 
 def handle_move(player, objects):
@@ -281,11 +286,27 @@ def main(windows):
     block_size = 96
 
     player = Player(100, 100, 50, 50)
-    fire = Fire(100, HEIGHT - block_size - 64, 16, 32)
+    fire = Fire(950, HEIGHT - block_size - 64, 16, 32)
     fire.on()
     floor = [Block(i * block_size, HEIGHT - block_size, block_size) for i in
              range(-WIDTH // block_size, WIDTH * 2 // block_size)]
-    objects = [*floor, Block(0, HEIGHT - block_size * 2, block_size), Block(block_size * 3, HEIGHT - block_size * 4, block_size), fire]
+    objects = [*floor, Block(block_size * -11, HEIGHT - block_size * 2, block_size),
+               Block(block_size * -11, HEIGHT - block_size * 3, block_size),
+               Block(block_size * -11, HEIGHT - block_size * 4, block_size),
+               Block(block_size * -11, HEIGHT - block_size * 5, block_size),
+               Block(block_size * 0, HEIGHT - block_size * 3, block_size),
+               Block(block_size * 5, HEIGHT - block_size * 4, block_size), fire,
+               Block(block_size * 6, HEIGHT - block_size * 4, block_size),
+               Block(block_size * 7, HEIGHT - block_size * 4, block_size),
+               Block(block_size * 19, HEIGHT - block_size * 2, block_size),
+               Block(block_size * 19, HEIGHT - block_size * 3, block_size),
+               Block(block_size * 19, HEIGHT - block_size * 4, block_size),
+               Block(block_size * 19, HEIGHT - block_size * 5, block_size),
+               Block(block_size * 19, HEIGHT - block_size * 6, block_size),
+               Block(block_size * 19, HEIGHT - block_size * 7, block_size),
+               Block(block_size * 12, HEIGHT - block_size * 4, block_size),
+               Block(block_size * 13, HEIGHT - block_size * 4, block_size),
+               Block(block_size * 14, HEIGHT - block_size * 4, block_size), ]
 
     offset_x = 0
     scroll_area_width = 300
