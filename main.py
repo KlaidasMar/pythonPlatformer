@@ -286,27 +286,83 @@ def main(window):
     block_size = 96
 
     player = Player(100, 100, 50, 50)
-    fire = Fire(950, HEIGHT - block_size - 64, 16, 32)
-    fire.on()
+    fire1 = Fire(950, HEIGHT - block_size - 64, 16, 32)
+    fire1.on()
+    fire2 = Fire(1750, HEIGHT - block_size * 7 - 64, 16, 32)
+    fire2.on()
+    fire3 = Fire(1750, HEIGHT - block_size * 3 - 64, 16, 32)
+    fire3.on()
+    fire4 = Fire(1475, HEIGHT - block_size - 64, 16, 32)
+    fire4.on()
+    fire5 = Fire(2950, HEIGHT - block_size - 64, 16, 32)
+    fire5.on()
+    fire6 = Fire(2125, HEIGHT - block_size * 4 - 64, 16, 32)
+    fire6.on()
     floor = [Block(i * block_size, HEIGHT - block_size, block_size) for i in
-             range(-WIDTH // block_size, WIDTH * 2 // block_size)]
+             range(-WIDTH // block_size, WIDTH * 6 // block_size)]
     objects = [*floor, Block(block_size * -11, HEIGHT - block_size * 2, block_size),
+               Block(block_size * -11, HEIGHT - block_size * 2, block_size),
                Block(block_size * -11, HEIGHT - block_size * 3, block_size),
                Block(block_size * -11, HEIGHT - block_size * 4, block_size),
                Block(block_size * -11, HEIGHT - block_size * 5, block_size),
+               Block(block_size * -11, HEIGHT - block_size * 6, block_size),
+               Block(block_size * -11, HEIGHT - block_size * 7, block_size),
+               Block(block_size * -8, HEIGHT - block_size * 3, block_size),
                Block(block_size * 0, HEIGHT - block_size * 3, block_size),
-               Block(block_size * 5, HEIGHT - block_size * 4, block_size), fire,
+               Block(block_size * -4, HEIGHT - block_size * 4, block_size),
+               Block(block_size * 5, HEIGHT - block_size * 4, block_size), fire1,
                Block(block_size * 6, HEIGHT - block_size * 4, block_size),
                Block(block_size * 7, HEIGHT - block_size * 4, block_size),
-               Block(block_size * 19, HEIGHT - block_size * 2, block_size),
-               Block(block_size * 19, HEIGHT - block_size * 3, block_size),
-               Block(block_size * 19, HEIGHT - block_size * 4, block_size),
+               Block(block_size * 12, HEIGHT - block_size * 0, block_size),
+               Block(block_size * 13, HEIGHT - block_size * 0, block_size),
+               Block(block_size * 14, HEIGHT - block_size * 0, block_size), fire2,
+               Block(block_size * 18, HEIGHT - block_size * 3, block_size),
+               Block(block_size * 9, HEIGHT - block_size * 0, block_size),
+               Block(block_size * 10, HEIGHT - block_size * 0, block_size),
+               Block(block_size * 11, HEIGHT - block_size * 0, block_size),
+               Block(block_size * 12, HEIGHT - block_size * 3, block_size), fire3,
+               Block(block_size * 13, HEIGHT - block_size * 3, block_size),
+               Block(block_size * 14, HEIGHT - block_size * 4, block_size),
+               Block(block_size * 15, HEIGHT - block_size * 4, block_size),
+               Block(block_size * 16, HEIGHT - block_size * 4, block_size),
+               Block(block_size * 17, HEIGHT - block_size * 3, block_size), fire4,
+               Block(block_size * 18, HEIGHT - block_size * 7, block_size),
                Block(block_size * 19, HEIGHT - block_size * 5, block_size),
-               Block(block_size * 19, HEIGHT - block_size * 6, block_size),
-               Block(block_size * 19, HEIGHT - block_size * 7, block_size),
-               Block(block_size * 12, HEIGHT - block_size * 4, block_size),
-               Block(block_size * 13, HEIGHT - block_size * 4, block_size),
-               Block(block_size * 14, HEIGHT - block_size * 4, block_size), ]
+               Block(block_size * 22, HEIGHT - block_size * 4, block_size),
+               Block(block_size * 23, HEIGHT - block_size * 4, block_size),
+               Block(block_size * 24, HEIGHT - block_size * 3, block_size),
+               Block(block_size * 27, HEIGHT - block_size * 4, block_size), fire5,
+               Block(block_size * 28, HEIGHT - block_size * 4, block_size),
+               Block(block_size * 29, HEIGHT - block_size * 5, block_size),
+               Block(block_size * 29, HEIGHT - block_size * 5, block_size),
+               Block(block_size * 30, HEIGHT - block_size * 6, block_size),
+               Block(block_size * 31, HEIGHT - block_size * 7, block_size),
+               Block(block_size * 32, HEIGHT - block_size * 7, block_size),
+               Block(block_size * 33, HEIGHT - block_size * 7, block_size),
+               Block(block_size * 34, HEIGHT - block_size * 2, block_size),
+               Block(block_size * 37, HEIGHT - block_size * 4, block_size), fire6,
+               Block(block_size * 38, HEIGHT - block_size * 4, block_size),
+               Block(block_size * 39, HEIGHT - block_size * 5, block_size),
+               Block(block_size * 40, HEIGHT - block_size * 5, block_size),
+               Block(block_size * 43, HEIGHT - block_size * 6, block_size),
+               Block(block_size * 44, HEIGHT - block_size * 7, block_size),
+               Block(block_size * 47, HEIGHT - block_size * 2, block_size),
+               Block(block_size * 49, HEIGHT - block_size * 4, block_size),
+               Block(block_size * 50, HEIGHT - block_size * 4, block_size),
+               Block(block_size * 51, HEIGHT - block_size * 5, block_size),
+               Block(block_size * 52, HEIGHT - block_size * 5, block_size),
+               Block(block_size * 56, HEIGHT - block_size * 6, block_size),
+               Block(block_size * 61, HEIGHT - block_size * 9, block_size),
+               Block(block_size * 61, HEIGHT - block_size * 8, block_size),
+               Block(block_size * 61, HEIGHT - block_size * 7, block_size),
+               Block(block_size * 61, HEIGHT - block_size * 6, block_size),
+               Block(block_size * 61, HEIGHT - block_size * 5, block_size),
+               Block(block_size * 61, HEIGHT - block_size * 4, block_size),
+               Block(block_size * 61, HEIGHT - block_size * 3, block_size),
+               Block(block_size * 61, HEIGHT - block_size * 2, block_size),
+               Block(block_size * 61, HEIGHT - block_size * 1, block_size),
+               Block(block_size * 61, HEIGHT - block_size * 0, block_size),
+               ]
 
     offset_x = 0
     scroll_area_width = 300
@@ -325,7 +381,12 @@ def main(window):
                     player.jump()
 
         player.loop(FPS)
-        fire.loop()
+        fire1.loop()
+        fire2.loop()
+        fire3.loop()
+        fire4.loop()
+        fire5.loop()
+        fire6.loop()
         handle_move(player, objects)
         draw(window, background, bg_image, player, objects, offset_x)
 
