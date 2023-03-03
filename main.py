@@ -71,7 +71,7 @@ class Player(pygame.sprite.Sprite):
         self.animation_count = 0
         self.jump_count += 1
         if self.jump_count == 1:
-            self.count = 0
+            self.fall_count = 0
 
     def move(self,dx, dy):
         self.rect.x += dx
