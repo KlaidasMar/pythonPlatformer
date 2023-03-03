@@ -46,10 +46,12 @@ def get_block(size):
     image = pygame.image.load(path).convert_alpha()
     surface = pygame.Surface((size, size), pygame.SRCALPHA, 32)
     rect = pygame.Rect(96, 0, size, size)
+    surface.blit(image, (0, 0), rect)
+    return  pygame.transform.scale2x(surface)
 
 class Player(pygame.sprite.Sprite):
     COLOR = (255, 0, 0)
-    GRAVITY = 0
+    GRAVITY = 1
     SPRITES = load_sprite_sheets("MainCharacters", "MaskDude", 32, 32, True)
     ANIMATION_DELAY = 5
 
@@ -120,7 +122,7 @@ class Object(pygame.sprite.Sprite):
 class Block(Object):
     def __init__(self, x, y, size):
         super().__init__(x, y, size, size)
-        block = load_block(size)
+        block = get_block(size)
         self.image.blit(block, (0, 0,))
         self.mask = pygame.mask.from_surface(self.image)
 
@@ -137,9 +139,12 @@ def get_background(name):
     return tiles, image
 
 
-def draw(window, background, bg_image, player):
+def draw(window, background, bg_image, player, objects):
     for tile in background:
         window.blit(bg_image, tile)
+
+    for object in objects:
+        object.draw(window)
 
     player.draw(window)
 
@@ -159,7 +164,10 @@ def main(windows):
     clock = pygame.time.Clock()
     background, bg_image = get_background("Brown.png")
 
+    block_size = 96
+
     player = Player(100, 100, 50, 50)
+    floor = [Block(i * block_size, HEIGHT - block_size, block_size) for i in range(-WIDTH // block_size, WIDTH * 2 // block_size)]
 
     run = True
     while run:
@@ -172,7 +180,7 @@ def main(windows):
 
         player.loop(FPS)
         handle_move(player)
-        draw(window, background, bg_image, player)
+        draw(window, background, bg_image, player, floor)
 
     pygame.quit()
     quit()
