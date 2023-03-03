@@ -279,7 +279,7 @@ def handle_move(player, objects):
             player.make_hit()
 
 
-def main(windows):
+def main(window):
     clock = pygame.time.Clock()
     background, bg_image = get_background("Brown.png")
 
