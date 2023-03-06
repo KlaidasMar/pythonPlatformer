@@ -413,6 +413,8 @@ def main(window):
 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE and player.jump_count < 2:
+                    sound = pygame.mixer.Sound("assets/Audio/fast-simple-chop-5-6270.mp3").play()
+                    sound.set_volume(0.5)
                     player.jump()
 
         pygame.display.update()
