@@ -1,23 +1,28 @@
-import os
-import random
-import math
+import button
 import pygame
 from os import listdir
 from os.path import isfile, join
 
 pygame.init()
 
-pygame.display.set_caption("Platformer")
-
 WIDTH, HEIGHT = 1000, 800
 FPS = 60
 PLAYER_VEL = 7
 
 window = pygame.display.set_mode((WIDTH, HEIGHT))
+pygame.display.set_caption("Platformer")
+
+star_img = pygame.image.load("assets/Buttons/start.png").convert_alpha()
+exit_img = pygame.image.load("assets/Buttons/exit.png").convert_alpha()
 
 pygame.mixer.music.load("assets/Audio/Peaceful Town Theme.wav")
 pygame.mixer.music.set_volume(0.20)
 pygame.mixer.music.play(-1, 0.0, 5000)
+click = pygame.mixer.Sound("assets/Audio/mixkit-negative-tone-interface-tap-2569.wav")
+click.set_volume(0.75)
+
+start_button = button.Button(200, 300, star_img, 0.2, click)
+exit_button = button.Button(650, 300, exit_img, 0.2, click)
 
 def flip(sprites):
     return [pygame.transform.flip(sprite, True, False) for sprite in sprites]
@@ -152,6 +157,7 @@ class Player(pygame.sprite.Sprite):
 
     def draw(self, win, offset_x):
         win.blit(self.sprite, (self.rect.x - offset_x, self.rect.y))
+
 
 
 class Object(pygame.sprite.Sprite):
@@ -368,31 +374,48 @@ def main(window):
     scroll_area_width = 300
 
     run = True
+    game_started = False
+
+    start_screen_img = pygame.image.load("assets/HomeScreen/Theme1.png")
+    start_button.draw(start_screen_img)
+    exit_button.draw(start_screen_img)
+    pygame.display.update()
+
     while run:
-        clock.tick(FPS)
+        window.blit(start_screen_img, (0, 0))
+        if game_started:
+            window.fill((255, 255, 255))
+            player.loop(FPS)
+            fire1.loop()
+            fire2.loop()
+            fire3.loop()
+            fire4.loop()
+            fire5.loop()
+            fire6.loop()
+            handle_move(player, objects)
+            draw(window, background, bg_image, player, objects, offset_x)
+
+            if (player.rect.right - offset_x >= WIDTH - scroll_area_width and player.x_vel > 0) or (
+                    (player.rect.left - offset_x <= scroll_area_width) and player.x_vel < 0):
+                offset_x += player.x_vel
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
                 break
 
+            if not game_started:
+                if start_button.draw(window):
+                    game_started = True
+
+                if exit_button.draw(window):
+                    run = False
+
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE and player.jump_count < 2:
                     player.jump()
 
-        player.loop(FPS)
-        fire1.loop()
-        fire2.loop()
-        fire3.loop()
-        fire4.loop()
-        fire5.loop()
-        fire6.loop()
-        handle_move(player, objects)
-        draw(window, background, bg_image, player, objects, offset_x)
-
-        if (player.rect.right - offset_x >= WIDTH - scroll_area_width and player.x_vel > 0) or (
-                (player.rect.left - offset_x <= scroll_area_width) and player.x_vel < 0):
-            offset_x += player.x_vel
+        pygame.display.update()
 
     pygame.quit()
     quit()
