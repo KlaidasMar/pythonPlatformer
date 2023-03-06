@@ -283,6 +283,10 @@ def handle_move(player, objects):
     for object in to_check:
         if object and object.name == "fire":
             player.make_hit()
+            dmg = pygame.mixer.Sound("assets/Audio/hurt_c_08-102842.mp3")
+            dmg.play()
+            dmg.set_volume(0.25)
+
 
 
 def main(window):
@@ -413,8 +417,7 @@ def main(window):
 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE and player.jump_count < 2:
-                    sound = pygame.mixer.Sound("assets/Audio/fast-simple-chop-5-6270.mp3").play()
-                    sound.set_volume(0.5)
+                    pygame.mixer.Sound("assets/Audio/fast-simple-chop-5-6270.mp3").play()
                     player.jump()
 
         pygame.display.update()
